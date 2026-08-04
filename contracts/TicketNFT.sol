@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.30;
 
 // OpenZeppelin provides a widely used, audited implementation of ERC-721.
-// Remix downloads this npm dependency automatically when the contract compiles.
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// Pinning the release keeps Remix builds reproducible for every learner.
+import {ERC721} from "@openzeppelin/contracts@5.6.1/token/ERC721/ERC721.sol";
 
 /**
  * @title TicketNFT

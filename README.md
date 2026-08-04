@@ -83,14 +83,15 @@ When using MetaMask, select or enable **Sepolia**. Its chain ID is `11155111` (h
 2. In **File Explorer**, create a file named `TicketNFT.sol`.
 3. Copy all contents of [`contracts/TicketNFT.sol`](contracts/TicketNFT.sol) into it.
 
-The import beginning with `@openzeppelin/contracts` uses OpenZeppelin's reusable ERC-721
-implementation. Remix fetches imported npm packages when it compiles.
+The import beginning with `@openzeppelin/contracts@5.6.1` uses a pinned release of
+OpenZeppelin's reusable ERC-721 implementation. Remix fetches the npm package when it
+compiles. Pinning the version ensures that every learner compiles the same dependency.
 
 ### 2. Compile
 
 1. Open the **Solidity Compiler** plugin in Remix.
-2. Select compiler `0.8.20` or a newer `0.8.x` compiler compatible with
-   `pragma solidity ^0.8.20`.
+2. Select compiler `0.8.30` or a newer `0.8.x` compiler compatible with
+   `pragma solidity ^0.8.30`.
 3. Make sure `TicketNFT.sol` is the active file.
 4. Click **Compile TicketNFT.sol**.
 
