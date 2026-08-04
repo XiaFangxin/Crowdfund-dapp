@@ -316,3 +316,9 @@ frontend.
 - [Remix Solidity compiler](https://remix-ide.readthedocs.io/en/latest/compile.html)
 - [Remix Deploy & Run](https://remix-ide.readthedocs.io/en/latest/run.html)
 - [ethers v6 providers](https://docs.ethers.org/v6/api/providers/)
+
+## Support the project
+
+If this beginner Web3 starter helped you, you can support future educational projects at:
+
+`0x3bfF60b4e21DBC63a2B83d82DFEA2fCB645fBAB3`
