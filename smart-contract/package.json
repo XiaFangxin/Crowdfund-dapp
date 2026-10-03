@@ -1,0 +1,33 @@
+{
+  "name": "crowdfund-contracts",
+  "version": "1.0.0",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "export:abi": "node scripts/export-abi.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Hardhat 3 crowdfunding demo contracts, tests, and deployment tooling",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^4.2.0",
+    "@nomicfoundation/hardhat-ignition": "^3.1.8",
+    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^4.0.0",
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.19.1",
+    "chai": "^6.3.0",
+    "dotenv": "^18.0.5",
+    "ethers": "^6.17.0",
+    "hardhat": "^3.18.1",
+    "mocha": "^12.0.3",
+    "typescript": "~6.0.3"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x",
+    "npm": "11.x"
+  }
+}

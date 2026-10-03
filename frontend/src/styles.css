@@ -1,0 +1,11 @@
+:root { font-family: system-ui, sans-serif; color: #17212b; background: #f5f7fa; }
+body { max-width: 900px; margin: 0 auto; padding: 24px; }
+header, section { background: white; padding: 24px; margin-bottom: 20px; border: 1px solid #dbe1e8; border-radius: 8px; }
+a { color: #175cb3; }
+label { display: block; margin: 16px 0; }
+input, textarea { display: block; box-sizing: border-box; width: 100%; max-width: 540px; padding: 8px; margin-top: 6px; font: inherit; }
+button { padding: 8px 14px; cursor: pointer; }
+button:disabled { cursor: default; opacity: .55; }
+code { overflow-wrap: anywhere; }
+[role="alert"] { color: #a41e1e; }
+li { margin: 12px 0; }

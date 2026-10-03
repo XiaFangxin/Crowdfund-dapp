@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+smart-contract/artifacts/
+smart-contract/cache/
+smart-contract/coverage/
+smart-contract/types/
+smart-contract/ignition/deployments/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
