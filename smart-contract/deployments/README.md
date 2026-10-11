@@ -1,9 +1,11 @@
-# 部署交接说明
+# Public Deployment Records
 
-本项目骨架尚未执行 Sepolia 部署。
+The team reports a successful Ignition deployment to Sepolia, Campaign `0` (`test1`) creation and frontend Detail reads. See [sepolia.json](sepolia.json) for the shared address.
 
-团队完成评审并部署后，添加可公开提交的 `sepolia.json`，记录链 ID（`11155111`）、真实合约地址、交易哈希、部署区块以及对应源码的 Git commit。不要包含私钥或带有认证信息的 RPC URL。
+Deployment transaction hash, block, source commit and actual deployment ID are unconfirmed (`null`). Fill them from the original receipt/journal without guessing. This handoff is not independent chain or source-verification evidence.
 
-Ignition 会在 `ignition/deployments/chain-11155111/` 中维护自己的部署日志。请在本地保留该日志，以便继续部署，不要手动修改。仓库已通过 `.gitignore` 忽略这些生成的日志。
+Preserve the previous public record under a versioned filename before updating the shared deployment. Keep source, generated ABI, address and frontend configuration aligned. New contracts do not inherit old campaigns or funds.
 
-部署与 ABI 导出命令请参考根目录的 [README](../../README.md)。
+Ignition journals live locally in `ignition/deployments/<deployment-id>/` and are Git-ignored. Default ID: `chain-11155111`; the original ID must still be confirmed. Preserve journals for resumption; use a new ID for an intentional new version, without manually altering journals.
+
+Never include private keys, seed phrases or authenticated RPC URLs. See the root [README](../../README.md) for commands and collaboration steps.
