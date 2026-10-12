@@ -10,11 +10,11 @@ Crowdfund DApp 是面向校园和社区项目的去中心化众筹演示应用�
 
 核心特点：钱包签名、透明的筹款规则、创建者与参与者分工，以及链上筹款进度展示。当前为 **Functional Demo**，不是承载真实资金的生产产品。
 
-| 实现与验证状态 | 功能与验证范围 |
-| --- | --- |
-| 已实现并在 Sepolia 验证 | 团队已通过 Hardhat Ignition 部署合约；已连接 MetaMask 并识别 Sepolia；已创建 Campaign `0`（`test1`）；详情页已读取创建者、目标金额、已筹金额、截止时间与状态。 |
+| 实现与验证状态             | 功能与验证范围                                                                                                                                                                      |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 已实现并在 Sepolia 验证    | 团队已通过 Hardhat Ignition 部署合约；已连接 MetaMask 并识别 Sepolia；已创建 Campaign `0`（`test1`）；详情页已读取创建者、目标金额、已筹金额、截止时间与状态。                      |
 | 已实现，尚未完成端到端验证 | Contribute、Withdraw、Refund 的合约、service 与按钮已实现，但 Sepolia 端到端验证尚未确认；Home 列表、My Campaigns 创建者筛选、账户/网络切换与错误提示已实现，完整浏览器回归待完成。 |
-| 计划功能 | 搜索/筛选/排序、进度与自动倒计时、捐款历史与 My Contributions、细化交易反馈、响应式体验；分类、图片、项目更新及里程碑投票为可选扩展。 |
+| 计划功能                   | 搜索/筛选/排序、进度与自动倒计时、捐款历史与 My Contributions、细化交易反馈、响应式体验；分类、图片、项目更新及里程碑投票为可选扩展。                                               |
 
 上述验证状态依据团队提供的进度，本次文档更新没有独立复现这些流程，也没有发送交易。Etherscan 源码验证状态与当前 Campaign 实时数值尚未确认。本地测试不能替代 Sepolia 端到端验证。
 
@@ -30,34 +30,34 @@ Ignition -> Sepolia 部署 -> 公开记录 -> frontend/.env
 
 项目没有后端、数据库或索引服务。MetaMask 提供 RPC 访问与交易签名，前端不处理私钥。`App.jsx` 管理共享的钱包 hook 和 Hash 导航，`#/campaign/0` 等直接链接无需配置服务端路由。
 
-| 现有路径 | 职责 |
-| --- | --- |
-| `frontend/src/pages/` | `Home.jsx`、`CreateCampaign.jsx`、`CampaignDetail.jsx`、`MyCampaigns.jsx`：列表、表单、链上读取与操作 |
-| `frontend/src/components/` | `Navbar.jsx`、`ConnectWallet.jsx`、`CampaignList.jsx`、`ContractStatus.jsx`：导航、钱包控制、列表与配置提示 |
-| `frontend/src/hooks/` | `useWallet.js`：钱包生命周期与事件；`useCampaigns.js`：众筹数据加载 |
-| `frontend/src/services/crowdfunding.js` | ethers 合约读写、等待交易回执与错误格式化 |
-| `frontend/src/config/` | `network.js`：Sepolia 网络 ID；`contracts.js`：公开合约地址校验 |
-| `frontend/src/contracts/Crowdfunding.json` | 仅保存生成的 ABI |
-| `frontend/src/App.jsx`, `main.jsx`, `styles.css` | 页面导航、React 入口与共享样式 |
-| `frontend/vite.config.js`, `.env.example` | Vite/React 配置与公开配置模板 |
-| `smart-contract/contracts/Crowdfunding.sol` | 众筹生命周期、资金记账与事件 |
-| `smart-contract/test/Crowdfunding.ts` | 在模拟网络运行的 ethers/Mocha 测试 |
-| `smart-contract/ignition/modules/Crowdfunding.ts` | `CrowdfundingModule`：部署无需构造参数的 `Crowdfunding` |
-| `smart-contract/deployments/` | 公开部署记录 |
-| `smart-contract/scripts/export-abi.mjs` | 将 ABI 导出到前端 |
-| `smart-contract/hardhat.config.ts`, `tsconfig.json`, `.env.example` | Hardhat 3 ESM/TypeScript 配置与私有部署配置模板 |
+| 现有路径                                                            | 职责                                                                                                        |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `frontend/src/pages/`                                               | `Home.jsx`、`CreateCampaign.jsx`、`CampaignDetail.jsx`、`MyCampaigns.jsx`：列表、表单、链上读取与操作       |
+| `frontend/src/components/`                                          | `Navbar.jsx`、`ConnectWallet.jsx`、`CampaignList.jsx`、`ContractStatus.jsx`：导航、钱包控制、列表与配置提示 |
+| `frontend/src/hooks/`                                               | `useWallet.js`：钱包生命周期与事件；`useCampaigns.js`：众筹数据加载                                         |
+| `frontend/src/services/crowdfunding.js`                             | ethers 合约读写、等待交易回执与错误格式化                                                                   |
+| `frontend/src/config/`                                              | `network.js`：Sepolia 网络 ID；`contracts.js`：公开合约地址校验                                             |
+| `frontend/src/contracts/Crowdfunding.json`                          | 仅保存生成的 ABI                                                                                            |
+| `frontend/src/App.jsx`, `main.jsx`, `styles.css`                    | 页面导航、React 入口与共享样式                                                                              |
+| `frontend/vite.config.js`, `.env.example`                           | Vite/React 配置与公开配置模板                                                                               |
+| `smart-contract/contracts/Crowdfunding.sol`                         | 众筹生命周期、资金记账与事件                                                                                |
+| `smart-contract/test/Crowdfunding.ts`                               | 在模拟网络运行的 ethers/Mocha 测试                                                                          |
+| `smart-contract/ignition/modules/Crowdfunding.ts`                   | `CrowdfundingModule`：部署无需构造参数的 `Crowdfunding`                                                     |
+| `smart-contract/deployments/`                                       | 公开部署记录                                                                                                |
+| `smart-contract/scripts/export-abi.mjs`                             | 将 ABI 导出到前端                                                                                           |
+| `smart-contract/hardhat.config.ts`, `tsconfig.json`, `.env.example` | Hardhat 3 ESM/TypeScript 配置与私有部署配置模板                                                             |
 
 ## 部署与快速启动
 
 ### 共用 Sepolia 合约
 
-| 项目 | 内容 |
-| --- | --- |
-| 网络 / Chain ID | Ethereum Sepolia / `11155111` (`0xaa36a7`) |
-| 合约地址 | `0xbdF615493ce21B7Ae54E6464D44c507C76b85B6C` |
-| 区块浏览器 | [Sepolia Etherscan](https://sepolia.etherscan.io/address/0xbdF615493ce21B7Ae54E6464D44c507C76b85B6C) |
-| 已知众筹 | ID `0`，标题 `test1`；状态与其他数值可能变化 |
-| 公开记录 | [smart-contract/deployments/sepolia.json](smart-contract/deployments/sepolia.json) |
+| 项目            | 内容                                                                                                 |
+| --------------- | ---------------------------------------------------------------------------------------------------- |
+| 网络 / Chain ID | Ethereum Sepolia / `11155111` (`0xaa36a7`)                                                           |
+| 合约地址        | `0xbdF615493ce21B7Ae54E6464D44c507C76b85B6C`                                                         |
+| 区块浏览器      | [Sepolia Etherscan](https://sepolia.etherscan.io/address/0xbdF615493ce21B7Ae54E6464D44c507C76b85B6C) |
+| 已知众筹        | ID `0`，标题 `test1`；状态与其他数值可能变化                                                         |
+| 公开记录        | [smart-contract/deployments/sepolia.json](smart-contract/deployments/sepolia.json)                   |
 
 **组员应使用现有共用合约，无需各自重新部署。** 运行前端不需要部署凭据。部署交易哈希、区块号、源码 commit 与实际 Ignition deployment ID 尚未确认，公开记录中保留为 `null`。
 
@@ -140,14 +140,14 @@ Ignition 默认使用 `chain-11155111`，在 `ignition/deployments/<deployment-i
 
 ID 从 `0` 开始。`Campaign` 包含 `creator`、`title`、`description`、`goal`、`deadline`、`amountRaised`、`withdrawn`。金额单位为 wei，截止时间为 Unix 秒级时间戳；在界面边界使用 `parseEther` / `formatEther`，不要用浮点运算记账 ETH。
 
-| 接口 | 行为 |
-| --- | --- |
-| `campaignCount()` / `getCampaign(id)` | 返回数量与结构体；不存在的 ID 会回退 |
-| `createCampaign(title, description, goal, deadline)` | 标题非空、目标为正、截止时间在未来；返回新 ID |
-| `contribute(id)` payable | 仅可在截止前捐入正数 ETH；重复捐款累加 |
-| `contributions(id, address)` | 记录的捐款额；退款后清零，成功提现后保留 |
-| `withdraw(id)` | 仅创建者可在截止时或之后、目标达成时调用一次；释放全部已筹资金 |
-| `refund(id)` | 截止时或之后、目标未达成；调用者领取自己的退款，仅一次 |
+| 接口                                                 | 行为                                                           |
+| ---------------------------------------------------- | -------------------------------------------------------------- |
+| `campaignCount()` / `getCampaign(id)`                | 返回数量与结构体；不存在的 ID 会回退                           |
+| `createCampaign(title, description, goal, deadline)` | 标题非空、目标为正、截止时间在未来；返回新 ID                  |
+| `contribute(id)` payable                             | 仅可在截止前捐入正数 ETH；重复捐款累加                         |
+| `contributions(id, address)`                         | 记录的捐款额；退款后清零，成功提现后保留                       |
+| `withdraw(id)`                                       | 仅创建者可在截止时或之后、目标达成时调用一次；释放全部已筹资金 |
+| `refund(id)`                                         | 截止时或之后、目标未达成；调用者领取自己的退款，仅一次         |
 
 事件包括 `CampaignCreated`、`Contributed`、`Withdrawn`、`Refunded`，众筹 ID 与参与者地址为索引字段。允许超额筹款与创建者捐款。`amountRaised` 是历史筹款总额，提现或退款后不变，不是剩余托管余额。现有规则不支持成功项目退款。
 
@@ -161,42 +161,42 @@ ID 从 `0` 开始。`Campaign` 包含 `creator`、`title`、`description`、`goa
 
 ### P0 — 基础流程、问题修复与安全测试
 
-| 功能 / 任务 | 目的 | 优先级 | 负责人角色 | 修改文件 | 代码改动 | 依赖关系 | 验收标准 |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Sepolia 全流程验证与针对性修复 | 确认真实资金流程 | P0 必做 | 测试 + Web3 + 页面 | `smart-contract/test/Crowdfunding.ts`；`frontend/src/services/crowdfunding.js`；`frontend/src/pages/{CreateCampaign,CampaignDetail}.jsx`；**NEW** `smart-contract/deployments/verification.md` | 验证现有 `createCampaign`、`contribute`、`withdraw`、`refund`、`getCampaign`、`getContribution`；修复可复现缺陷，记录不含敏感信息的手工验证证据 | 两个钱包与测试 ETH；仅需修复合约时才更新 ABI/重新部署 | 创建、捐款、读取、成功提现和失败退款有确认哈希；正确处理提前、无权限、重复调用与用户拒绝；状态/余额符合规则 |
-| 安全与边界测试 | 防止资金转出与记账回归 | P0 必做 | 测试 + 合约 | `smart-contract/test/Crowdfunding.ts`；**NEW** `smart-contract/contracts/test/AdversarialReceiver.sol` | 新增接收者辅助合约；测试重入、拒收转账/回滚、多项目资金隔离、超额筹款、准确截止边界、无效提现/退款 ID 和 `Withdrawn` 事件 | 本地 Hardhat；仅 `Crowdfunding.sol` 需修复时更新正式 ABI/重新部署 | 新旧测试通过；无重复转出或跨项目盗取；转账失败保留领取资格，成功项目不可退款 |
-| 完善交易反馈 | 说明签名、等待确认与失败状态 | P0 必做 | Web3 + 页面 + UI | `frontend/src/services/crowdfunding.js`；`frontend/src/pages/{CreateCampaign,CampaignDetail}.jsx`；**NEW** `frontend/src/components/TransactionStatus.jsx` | 在 `tx.wait()` 前新增 **NEW** 交易提交回调；将 `pending`/`message` 扩展为待签名/已提交/已确认/失败状态；保留哈希与回执、浏览器链接，处理替换/拒绝；解析 `CampaignCreated` 回执并跳转到 ID | 无需合约/ABI 修改或重新部署 | 所有写入操作等待时显示哈希、防止重复提交、失败后恢复、确认后刷新；创建后跳转真实 ID |
-| 自动更新状态与钱包回归 | 防止过期资格和旧账户数据残留 | P0 必做 | 页面 + Web3 | `frontend/src/pages/CampaignDetail.jsx`；`frontend/src/hooks/{useWallet,useCampaigns}.js`；**NEW** `frontend/src/utils/campaignStatus.js` | 将 `ended`/`successful`/`withdrawn` 推导提取为 **NEW** 共享工具；添加定时 effect 与清理；保留账户/网络/ID 切换时的过期请求取消逻辑 | 仅推导界面状态，无需 ABI/重新部署 | 到截止时间无需刷新即可更新按钮；错误网络/断开时禁用写入；账户/ID 切换不残留个人捐款；合约仍为最终依据 |
-| 响应式与无障碍界面 | 支持手机和键盘演示 | P0 必做 | UI + 页面 | `frontend/src/styles.css`；`frontend/src/components/{Navbar,CampaignList,ConnectWallet,ContractStatus}.jsx`；`frontend/src/pages/{CreateCampaign,CampaignDetail}.jsx` | 响应式布局、地址换行、焦点样式、统一加载/空数据/错误状态和无障碍状态提示 | 与页面负责人约定 props，无合约依赖 | 360px 与桌面宽度均无横向溢出；键盘导航/表单可用；等待和错误提示清晰 |
+| 功能 / 任务                    | 目的                         | 优先级  | 负责人角色         | 修改文件                                                                                                                                                                                       | 代码改动                                                                                                                                                                                  | 依赖关系                                                          | 验收标准                                                                                                    |
+| ------------------------------ | ---------------------------- | ------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Sepolia 全流程验证与针对性修复 | 确认真实资金流程             | P0 必做 | 测试 + Web3 + 页面 | `smart-contract/test/Crowdfunding.ts`；`frontend/src/services/crowdfunding.js`；`frontend/src/pages/{CreateCampaign,CampaignDetail}.jsx`；**NEW** `smart-contract/deployments/verification.md` | 验证现有 `createCampaign`、`contribute`、`withdraw`、`refund`、`getCampaign`、`getContribution`；修复可复现缺陷，记录不含敏感信息的手工验证证据                                           | 两个钱包与测试 ETH；仅需修复合约时才更新 ABI/重新部署             | 创建、捐款、读取、成功提现和失败退款有确认哈希；正确处理提前、无权限、重复调用与用户拒绝；状态/余额符合规则 |
+| 安全与边界测试                 | 防止资金转出与记账回归       | P0 必做 | 测试 + 合约        | `smart-contract/test/Crowdfunding.ts`；**NEW** `smart-contract/contracts/test/AdversarialReceiver.sol`                                                                                         | 新增接收者辅助合约；测试重入、拒收转账/回滚、多项目资金隔离、超额筹款、准确截止边界、无效提现/退款 ID 和 `Withdrawn` 事件                                                                 | 本地 Hardhat；仅 `Crowdfunding.sol` 需修复时更新正式 ABI/重新部署 | 新旧测试通过；无重复转出或跨项目盗取；转账失败保留领取资格，成功项目不可退款                                |
+| 完善交易反馈                   | 说明签名、等待确认与失败状态 | P0 必做 | Web3 + 页面 + UI   | `frontend/src/services/crowdfunding.js`；`frontend/src/pages/{CreateCampaign,CampaignDetail}.jsx`；**NEW** `frontend/src/components/TransactionStatus.jsx`                                     | 在 `tx.wait()` 前新增 **NEW** 交易提交回调；将 `pending`/`message` 扩展为待签名/已提交/已确认/失败状态；保留哈希与回执、浏览器链接，处理替换/拒绝；解析 `CampaignCreated` 回执并跳转到 ID | 无需合约/ABI 修改或重新部署                                       | 所有写入操作等待时显示哈希、防止重复提交、失败后恢复、确认后刷新；创建后跳转真实 ID                         |
+| 自动更新状态与钱包回归         | 防止过期资格和旧账户数据残留 | P0 必做 | 页面 + Web3        | `frontend/src/pages/CampaignDetail.jsx`；`frontend/src/hooks/{useWallet,useCampaigns}.js`；**NEW** `frontend/src/utils/campaignStatus.js`                                                      | 将 `ended`/`successful`/`withdrawn` 推导提取为 **NEW** 共享工具；添加定时 effect 与清理；保留账户/网络/ID 切换时的过期请求取消逻辑                                                        | 仅推导界面状态，无需 ABI/重新部署                                 | 到截止时间无需刷新即可更新按钮；错误网络/断开时禁用写入；账户/ID 切换不残留个人捐款；合约仍为最终依据       |
+| 响应式与无障碍界面             | 支持手机和键盘演示           | P0 必做 | UI + 页面          | `frontend/src/styles.css`；`frontend/src/components/{Navbar,CampaignList,ConnectWallet,ContractStatus}.jsx`；`frontend/src/pages/{CreateCampaign,CampaignDetail}.jsx`                          | 响应式布局、地址换行、焦点样式、统一加载/空数据/错误状态和无障碍状态提示                                                                                                                  | 与页面负责人约定 props，无合约依赖                                | 360px 与桌面宽度均无横向溢出；键盘导航/表单可用；等待和错误提示清晰                                         |
 
 ### P1 — 核心产品增强
 
-| 功能 / 任务 | 目的 | 优先级 | 负责人角色 | 修改文件 | 代码改动 | 依赖关系 | 验收标准 |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 众筹搜索/筛选/排序 | 帮助用户找到相关项目 | P1 推荐 | 页面 + UI | `frontend/src/pages/Home.jsx`；`frontend/src/components/CampaignList.jsx`；**NEW** `frontend/src/components/CampaignFilters.jsx` | 在 `Home` 添加查询/状态/排序状态；按标题、描述和共享状态筛选 `useCampaigns` 结果；用 bigint 比较实现稳定的截止时间/已筹金额排序；支持重置与无匹配提示 | P0 状态工具、现有 `listCampaigns`；无需重新部署 | 大小写无关搜索、状态筛选与排序可组合；保留原始获取数据 |
-| 筹款进度与倒计时 | 展示目标进度与剩余时间 | P1 推荐 | UI + 页面 | `frontend/src/components/CampaignList.jsx`；`frontend/src/pages/CampaignDetail.jsx`；**NEW** `frontend/src/components/CampaignProgress.jsx` | 根据 `goal`、`amountRaised`、`deadline` 显示无障碍进度/倒计时；bigint 比例计算，进度条上限 100% 但保留超额总额；清理定时器 | P0 时间/状态逻辑，无合约变更 | 列表/详情一致；超额金额准确、到期计时归零，正确标注历史总额 |
-| 捐款记录 / My Contributions | 查看参与记录和退款资格 | P1 推荐 | Web3 + 页面 | `frontend/src/services/crowdfunding.js`；`frontend/src/pages/CampaignDetail.jsx`；`frontend/src/App.jsx`；`frontend/src/components/Navbar.jsx`；**NEW** `frontend/src/pages/MyContributions.jsx`；**NEW** `frontend/src/components/DonationHistory.jsx` | **NEW** 查询工具通过 `queryFilter` 读取索引事件 `Contributed`/`Refunded`；分块查询、按哈希/日志位置去重、按区块/日志排序；新增个人路由；用 `getContribution` 与项目状态判断资格 | 先确认部署起始区块或说明分段查询回退方案；考虑 RPC 日志限制；无需 ABI/重新部署 | 历史记录含交易链接，换账户刷新；退款后捐款历史仍保留；提现后保留的映射不标为可退款；RPC 错误可见 |
-| 分类、图片/元数据与项目更新 | 改善发现与项目说明 | P1 可选，推荐范围完成后再做 | 合约 + Web3 + 页面 + UI | `smart-contract/contracts/Crowdfunding.sol`；`smart-contract/test/Crowdfunding.ts`；`frontend/src/services/crowdfunding.js`；`frontend/src/pages/{CreateCampaign,CampaignDetail,Home}.jsx`；生成 ABI；**NEW** `frontend/src/components/CampaignMetadata.jsx` | 设计 **NEW** 创建字段 `metadataURI`、创建者专属更新函数/事件；公开托管或 IPFS JSON 定义分类/图片/更新格式；安全渲染文字/URL 并提供回退，约定更新历史语义 | 托管/固定保存方案、合约测试、ABI 导出、新部署/地址；旧项目仍在旧合约 | 跨浏览器持久可读，仅创建者可更新；缺失 JSON/不安全 URL 可妥善处理；分类筛选一致，资金条款与可编辑信息分开 |
+| 功能 / 任务                 | 目的                   | 优先级                      | 负责人角色              | 修改文件                                                                                                                                                                                                                                                     | 代码改动                                                                                                                                                                        | 依赖关系                                                                       | 验收标准                                                                                                  |
+| --------------------------- | ---------------------- | --------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| 众筹搜索/筛选/排序          | 帮助用户找到相关项目   | P1 推荐                     | 页面 + UI               | `frontend/src/pages/Home.jsx`；`frontend/src/components/CampaignList.jsx`；**NEW** `frontend/src/components/CampaignFilters.jsx`                                                                                                                             | 在 `Home` 添加查询/状态/排序状态；按标题、描述和共享状态筛选 `useCampaigns` 结果；用 bigint 比较实现稳定的截止时间/已筹金额排序；支持重置与无匹配提示                           | P0 状态工具、现有 `listCampaigns`；无需重新部署                                | 大小写无关搜索、状态筛选与排序可组合；保留原始获取数据                                                    |
+| 筹款进度与倒计时            | 展示目标进度与剩余时间 | P1 推荐                     | UI + 页面               | `frontend/src/components/CampaignList.jsx`；`frontend/src/pages/CampaignDetail.jsx`；**NEW** `frontend/src/components/CampaignProgress.jsx`                                                                                                                  | 根据 `goal`、`amountRaised`、`deadline` 显示无障碍进度/倒计时；bigint 比例计算，进度条上限 100% 但保留超额总额；清理定时器                                                      | P0 时间/状态逻辑，无合约变更                                                   | 列表/详情一致；超额金额准确、到期计时归零，正确标注历史总额                                               |
+| 捐款记录 / My Contributions | 查看参与记录和退款资格 | P1 推荐                     | Web3 + 页面             | `frontend/src/services/crowdfunding.js`；`frontend/src/pages/CampaignDetail.jsx`；`frontend/src/App.jsx`；`frontend/src/components/Navbar.jsx`；**NEW** `frontend/src/pages/MyContributions.jsx`；**NEW** `frontend/src/components/DonationHistory.jsx`      | **NEW** 查询工具通过 `queryFilter` 读取索引事件 `Contributed`/`Refunded`；分块查询、按哈希/日志位置去重、按区块/日志排序；新增个人路由；用 `getContribution` 与项目状态判断资格 | 先确认部署起始区块或说明分段查询回退方案；考虑 RPC 日志限制；无需 ABI/重新部署 | 历史记录含交易链接，换账户刷新；退款后捐款历史仍保留；提现后保留的映射不标为可退款；RPC 错误可见          |
+| 分类、图片/元数据与项目更新 | 改善发现与项目说明     | P1 可选，推荐范围完成后再做 | 合约 + Web3 + 页面 + UI | `smart-contract/contracts/Crowdfunding.sol`；`smart-contract/test/Crowdfunding.ts`；`frontend/src/services/crowdfunding.js`；`frontend/src/pages/{CreateCampaign,CampaignDetail,Home}.jsx`；生成 ABI；**NEW** `frontend/src/components/CampaignMetadata.jsx` | 设计 **NEW** 创建字段 `metadataURI`、创建者专属更新函数/事件；公开托管或 IPFS JSON 定义分类/图片/更新格式；安全渲染文字/URL 并提供回退，约定更新历史语义                        | 托管/固定保存方案、合约测试、ABI 导出、新部署/地址；旧项目仍在旧合约           | 跨浏览器持久可读，仅创建者可更新；缺失 JSON/不安全 URL 可妥善处理；分类筛选一致，资金条款与可编辑信息分开 |
 
 不要将结构化元数据偷偷塞入 `description`，也不要把浏览器本地存储称为去中心化持久化。本地示例数据需明确标注。课程范围使用元数据分类即可，链上分类会增加存储成本。当前状态由截止时间、筹款和提现情况推导；取消、延长截止或提前释放资金需要单独评审资金规则。
 
 ### P2 — 高级去中心化功能（可选拓展）
 
-| 功能 / 任务 | 目的 | 优先级 | 负责人角色 | 修改文件 | 代码改动 | 依赖关系 | 验收标准 |
-| --- | --- | --- | --- | --- | --- | --- | --- |
+| 功能 / 任务                | 目的                     | 优先级  | 负责人角色                         | 修改文件                                                                                                                                                                                                                                                                                                                                                             | 代码改动                                                                                                                                                                                                                  | 依赖关系                                                                    | 验收标准                                                                                                                         |
+| -------------------------- | ------------------------ | ------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | 里程碑资金释放与参与者投票 | 按约定进展分阶段释放资金 | P2 可选 | 合约 + 测试，随后 Web3 + 页面 + UI | `smart-contract/contracts/Crowdfunding.sol`；`smart-contract/test/Crowdfunding.ts`；按需修改 `smart-contract/ignition/modules/Crowdfunding.ts`；生成 ABI；`frontend/src/services/crowdfunding.js`；`frontend/src/pages/{CreateCampaign,CampaignDetail}.jsx`；**NEW** `frontend/src/components/MilestoneVoting.jsx`；**NEW** `smart-contract/test/MilestoneVoting.ts` | 设计托管/已释放余额；**NEW** 建议函数 `requestMilestoneRelease`、`voteMilestone`、`executeMilestoneRelease` 与事件；替换该版本一次性 `withdraw` 规则；先明确捐款权重快照、法定投票比例、期限、拒绝/超时与剩余资金退款规则 | P0 完成；新 ABI/合约/部署及独立数据；决定创建者捐款是否有投票权；无自动迁移 | 测试证明合资格单次投票、快照权重、无提前/重复释放、转出不超过托管额，以及明确的拒绝/超时/退款行为；评审后完成双钱包 Sepolia 演示 |
 
 里程碑释放与提现投票应统一设计，因为都影响托管资金和退款。DAO 代币、NFT、代理升级与完整索引服务应在必要演示完成后再考虑。
 
 ## 小组开发与协作指南
 
-| 角色（约五人） | 主要负责文件 | 跨角色协作 |
-| --- | --- | --- |
-| 1. 智能合约开发 | `smart-contract/contracts/Crowdfunding.sol` | 与测试、Web3 确认生命周期、记账、函数签名与事件 |
-| 2. 合约测试与安全 | `smart-contract/test/Crowdfunding.ts`、NEW 辅助合约/测试与手工验证证据 | 评审资金转出，与 Web3 共同验证 Sepolia |
-| 3. 部署与 Web3 集成 | `smart-contract/hardhat.config.ts`、`ignition/`、`deployments/`、`scripts/export-abi.mjs`；前端 `services/`、`config/`、`hooks/useWallet.js` 与生成 ABI | 维护源码/ABI/地址对应关系，向页面提供 service 与状态，统筹部署 |
-| 4. 前端页面与数据集成 | `frontend/src/pages/`、`hooks/useCampaigns.js`、`App.jsx` | 调用共享 service，与 UI、Web3 约定路由、props 与状态 |
-| 5. UI 组件与用户体验 | `frontend/src/components/`、`styles.css` | 与页面约定 props，签名逻辑保留在 hooks/services，协调 Navbar 修改 |
+| 角色（约五人）        | 主要负责文件                                                                                                                                            | 跨角色协作                                                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| 1. 智能合约开发       | `smart-contract/contracts/Crowdfunding.sol`                                                                                                             | 与测试、Web3 确认生命周期、记账、函数签名与事件                   |
+| 2. 合约测试与安全     | `smart-contract/test/Crowdfunding.ts`、NEW 辅助合约/测试与手工验证证据                                                                                  | 评审资金转出，与 Web3 共同验证 Sepolia                            |
+| 3. 部署与 Web3 集成   | `smart-contract/hardhat.config.ts`、`ignition/`、`deployments/`、`scripts/export-abi.mjs`；前端 `services/`、`config/`、`hooks/useWallet.js` 与生成 ABI | 维护源码/ABI/地址对应关系，向页面提供 service 与状态，统筹部署    |
+| 4. 前端页面与数据集成 | `frontend/src/pages/`、`hooks/useCampaigns.js`、`App.jsx`                                                                                               | 调用共享 service，与 UI、Web3 约定路由、props 与状态              |
+| 5. UI 组件与用户体验  | `frontend/src/components/`、`styles.css`                                                                                                                | 与页面约定 props，签名逻辑保留在 hooks/services，协调 Navbar 修改 |
 
 **接口变更流程：Solidity 修改 → 测试 → 编译 → ABI 导出 → Sepolia 部署 → 合约地址更新 → 前端集成。**
 
@@ -211,4 +211,4 @@ ID 从 `0` 开始。`Campaign` 包含 `creator`、`title`、`description`、`goa
 - `frontend/.env` 只能包含公开配置：Vite 会将 `VITE_*` 写入浏览器构建产物。禁止放入私钥、助记词、带认证信息的 RPC URL 或部署凭据。
 - `smart-contract/.env` 保持私有，仅提交空白/示例模板，不要输出真实值。
 - `.gitignore` 排除 `.env`、依赖、生成的构建/编译产物、日志与 Ignition 部署日志；两个 npm lockfile 和生成的前端 ABI 应提交。
-- 公开记录仅含公开标识与证据；未知哈希、区块、commit 和 deployment ID 保留为 `null`。泄露凭据需撤销或更换，删除文件不能清除 Git 历史。
+- 公开记录仅含公开标识与证据；未知哈希、区块、commit 和 deployment ID 保留为 `null`。泄露凭据需撤销或更换，删除文件不能清除 Git 历史。哈哈哈哈哈哈
