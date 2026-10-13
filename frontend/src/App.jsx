@@ -5,6 +5,7 @@ import Home from "./pages/Home.jsx";
 import CreateCampaign from "./pages/CreateCampaign.jsx";
 import CampaignDetail from "./pages/CampaignDetail.jsx";
 import MyCampaigns from "./pages/MyCampaigns.jsx";
+import MyContributions from "./pages/MyContributions.jsx";
 import "./styles.css";
 
 function App() {
@@ -20,9 +21,11 @@ function App() {
   if (route === "/") page = <Home wallet={wallet} />;
   else if (route === "/create") page = <CreateCampaign wallet={wallet} />;
   else if (route === "/my-campaigns") page = <MyCampaigns wallet={wallet} />;
+  else if (route === "/my-contributions") page = <MyContributions wallet={wallet} />;
   else if (detail) page = <CampaignDetail key={detail[1]} wallet={wallet} id={detail[1]} />;
   else page = <section><h2>Page not found</h2><a href="#/">Back to Home</a></section>;
-  return <><Navbar wallet={wallet} /><main>{page}</main></>;
+  return <><Navbar wallet={wallet} route={route} /><main id="main-content">{page}</main>
+    <footer className="site-footer"><span>Crowdfund · A community crowdfunding demo</span><span>Test network · Sepolia</span></footer></>;
 }
 
 export default App;

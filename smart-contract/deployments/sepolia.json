@@ -6,10 +6,10 @@
   "explorerUrl": "https://sepolia.etherscan.io/address/0xbdF615493ce21B7Ae54E6464D44c507C76b85B6C",
   "ignitionModule": "CrowdfundingModule",
   "deploymentId": null,
-  "transactionHash": null,
-  "blockNumber": null,
+  "transactionHash": "0x2b25db8703e516e97a18545126b2be869f32db9a3ea4ef34f676421289344734",
+  "blockNumber": 11892197,
   "sourceCommit": null,
-  "evidenceSource": "Team-reported deployment and frontend verification; original receipt and Ignition journal not confirmed in this documentation update.",
+  "evidenceSource": "Verified on Sepolia Etherscan deployment transaction.",
   "verifiedDemoCampaign": { "id": 0, "title": "test1" },
   "pendingEndToEndVerification": ["contribute", "withdraw", "refund"]
 }

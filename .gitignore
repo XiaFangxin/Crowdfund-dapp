@@ -1,4 +1,7 @@
 node_modules/
+.vs/
+design/
+frontend/test/
 dist/
 .env
 .env.*
