@@ -73,3 +73,38 @@ export async function refund(ethereum, account, id) {
   const contract = await getContract(ethereum, account);
   return (await contract.refund(id)).wait();
 }
+
+export async function getContributionHistory(ethereum, account) {
+  if (!account) return [];
+  const value = (import.meta.env.VITE_CROWDFUNDING_DEPLOY_BLOCK ?? "").trim();
+  if (!/^\d+$/.test(value)) throw new Error("Set VITE_CROWDFUNDING_DEPLOY_BLOCK in frontend/.env.");
+  const startBlock = Number(value);
+  if (!Number.isSafeInteger(startBlock)) throw new Error("Invalid deployment block.");
+  const contract = await getContract(ethereum);
+  const provider = contract.runner;
+  const latestBlock = await provider.getBlockNumber();
+  if (startBlock > latestBlock) throw new Error("Deployment block is above latest block.");
+  const events = [];
+  const CHUNK_SIZE = 2000;
+  const [donationFilter, refundFilter] = [contract.filters.Contributed(null, account), contract.filters.Refunded(null, account)];
+  for (let from = startBlock; from <= latestBlock; from += CHUNK_SIZE) {
+    const to = Math.min(from + CHUNK_SIZE - 1, latestBlock);
+    const [donations, refunds] = await Promise.all([contract.queryFilter(donationFilter, from, to), contract.queryFilter(refundFilter, from, to)]);
+    donations.forEach((log) => events.push({ type: "Donation", log }));
+    refunds.forEach((log) => events.push({ type: "Refund", log }));
+  }
+  const timestamps = new Map();
+  async function getTimestamp(blockNumber) {
+    if (!timestamps.has(blockNumber)) timestamps.set(blockNumber, provider.getBlock(blockNumber).then((block) => {
+      if (!block) throw new Error("Block not found.");
+      return Number(block.timestamp);
+    }));
+    return timestamps.get(blockNumber);
+  }
+  const records = await Promise.all(events.map(async ({ type, log }) => {
+    const logIndex = log.index ?? log.logIndex ?? 0;
+    return { id: `${log.transactionHash}-${logIndex}`, type, campaignId: String(log.args.campaignId), amountWei: log.args.amount,
+      transactionHash: log.transactionHash, blockNumber: log.blockNumber, logIndex, timestamp: await getTimestamp(log.blockNumber) };
+  }));
+  return records.sort((a, b) => b.blockNumber - a.blockNumber || b.logIndex - a.logIndex);
+}

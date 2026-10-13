@@ -5,3 +5,4 @@ export const contractConfigured = isAddress(crowdfundingAddress) && crowdfunding
 export const contractConfigMessage = !crowdfundingAddress
   ? "Contract not deployed/configured. Add the real Sepolia address to frontend/.env after deployment."
   : !contractConfigured ? "Invalid contract address. Check VITE_CROWDFUNDING_ADDRESS in frontend/.env." : "";
+export const deploymentBlock = (import.meta.env.VITE_CROWDFUNDING_DEPLOY_BLOCK ?? "").trim();
