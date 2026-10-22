@@ -7,8 +7,8 @@ export default function Navbar({ wallet, route }) {
       <nav aria-label="Main navigation">
         <a href="#/" aria-current={route === "/" ? "page" : undefined}>Explore</a>
         <a href="#/create" aria-current={route === "/create" ? "page" : undefined}>Create Campaign</a>
-        <a href="#/my-campaigns" aria-current={route === "/my-campaigns" ? "page" : undefined}>My Campaigns</a>
-        <a href="#/my-contributions" aria-current={route === "/my-contributions" ? "page" : undefined}>My Contributions</a>
+        <a href="#/profile" aria-current={route === "/profile" ? "page" : undefined}>Profile</a>
+        <a href="#/admin" aria-current={route === "/admin" ? "page" : undefined}>Admin</a>
       </nav>
       <ConnectWallet wallet={wallet} />
     </div>

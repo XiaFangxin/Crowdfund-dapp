@@ -1,5 +1,6 @@
+import CampaignMetadata from "./CampaignMetadata.jsx";
 import { formatEther } from "ethers";
-import { campaignStatus, fundingProgress } from "../utils/campaigns.js";
+import { campaignStatus, fundingProgress, countdown } from "../utils/campaigns.js";
 
 const deadlineFormat = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
 
@@ -12,6 +13,11 @@ export default function CampaignCard({ campaign, now }) {
       <span className={`status-badge status-${status.toLowerCase()}`}>{status}</span>
       <span className="campaign-id">#{campaign.id}</span>
     </div>
+    {campaign.metadataURI && <CampaignMetadata uri={campaign.metadataURI} compact />}
+    {campaign.category && <p>{campaign.category.name} #{campaign.categoryId}{campaign.category.active ? "" : " (category inactive)"}</p>}
+    <p>{countdown(campaign.deadline,now)}</p>
+    {campaign.offchainMetrics && <p>{String(campaign.offchainMetrics.views)} approximate views / {String(campaign.offchainMetrics.favorites)} saves (off chain)</p>}
+    {campaign.statistics && <p>{String(campaign.statistics.donations)} donations / {String(campaign.statistics.donors)} unique donors</p>}
     <h3 className="campaign-title" title={campaign.title}>{campaign.title}</h3>
     <p className="campaign-description" title={campaign.description}>{campaign.description || "No description provided."}</p>
     <div className="campaign-funding">

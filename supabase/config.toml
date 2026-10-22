@@ -1,0 +1,7 @@
+project_id = "crowdfund-offchain"
+
+# Custom stateful bearer sessions are verified inside this function, not by the JWT gateway.
+[functions.interactions]
+verify_jwt = false
+import_map = "./functions/deno.json"
+entrypoint = "./functions/interactions/index.ts"

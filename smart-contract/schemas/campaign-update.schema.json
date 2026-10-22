@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "campaign-update",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "body": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20000
+    },
+    "images": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "maxLength": 2048,
+        "pattern": "^(ipfs://|https://)[!-~]+$"
+      }
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "previousUpdateURI": {
+      "type": "string",
+      "maxLength": 2048,
+      "pattern": "^(ipfs://|https://)[!-~]+$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "title",
+    "body",
+    "images",
+    "publishedAt"
+  ]
+}

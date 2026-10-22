@@ -9,7 +9,7 @@ async function fixture() {
   await crowdfunding.waitForDeployment();
   const deadline = (await networkHelpers.time.latest()) + 3600;
   const goal = ethers.parseEther("1");
-  await crowdfunding.createCampaign("Community garden", "Demo campaign", goal, deadline);
+  await crowdfunding.createCampaign("Community garden", "Demo campaign", goal, deadline, 0);
   return { crowdfunding, creator, alice, bob, deadline, goal };
 }
 
@@ -24,15 +24,15 @@ describe("Crowdfunding", function () {
     expect(campaign.goal).to.equal(goal);
     expect(campaign.deadline).to.equal(BigInt(deadline));
     expect(campaign.amountRaised).to.equal(0n);
-    await expect(crowdfunding.createCampaign("Second", "", goal, deadline))
+    await expect(crowdfunding.createCampaign("Second", "", goal, deadline, 0))
       .to.emit(crowdfunding, "CampaignCreated").withArgs(1n, creator.address, "Second", goal, deadline);
   });
 
   it("rejects invalid campaign data and nonexistent IDs", async function () {
     const { crowdfunding, deadline, goal } = await networkHelpers.loadFixture(fixture);
-    await expect(crowdfunding.createCampaign("", "", goal, deadline)).to.be.revertedWith("Title required");
-    await expect(crowdfunding.createCampaign("Test", "", 0, deadline)).to.be.revertedWith("Goal must be positive");
-    await expect(crowdfunding.createCampaign("Test", "", goal, 1)).to.be.revertedWith("Deadline must be in future");
+    await expect(crowdfunding.createCampaign("", "", goal, deadline, 0)).to.be.revertedWith("Title required");
+    await expect(crowdfunding.createCampaign("Test", "", 0, deadline, 0)).to.be.revertedWith("Goal must be positive");
+    await expect(crowdfunding.createCampaign("Test", "", goal, 1, 0)).to.be.revertedWith("Deadline must be in future");
     await expect(crowdfunding.getCampaign(99)).to.be.revertedWith("Campaign not found");
     await expect(crowdfunding.contribute(99, { value: 1 })).to.be.revertedWith("Campaign not found");
   });

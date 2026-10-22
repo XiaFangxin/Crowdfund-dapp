@@ -36,7 +36,14 @@ export default function useWallet() {
 
   useEffect(() => {
     let provider;
-    const changed = () => { void refresh(provider); };
+    const changed = () => {
+      // Clear identity immediately; prevent writes or stale private data during refresh.
+      ++generation.current;
+      setAccount("");
+      setChainId(null);
+      setRevision(value => value + 1);
+      void refresh(provider);
+    };
     const disconnected = () => {
       ++generation.current;
       setAccount("");

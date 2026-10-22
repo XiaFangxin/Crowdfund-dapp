@@ -1,54 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { formatEther } from "ethers";
 import useCampaigns from "../hooks/useCampaigns.js";
+import useResource from "../hooks/useResource.js";
 import ContractStatus from "../components/ContractStatus.jsx";
-import { contractConfigured } from "../config/contracts.js";
-import { errorMessage, getContributionHistory } from "../services/crowdfunding.js";
+import { getWalletActivity } from "../services/crowdfunding.js";
 import { contributionSummary, filterContributionRecords } from "../utils/contributions.js";
-
-const dateFormat = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
-
-export default function MyContributions({ wallet }) {
-  const { campaigns } = useCampaigns(wallet);
-  const [history, setHistory] = useState({ records: [], loading: false, error: "" });
-  const [search, setSearch] = useState("");
-  const [refreshKey, setRefreshKey] = useState(0);
-  useEffect(() => {
-    let active = true;
-    if (!contractConfigured || !wallet.ethereum || !wallet.account || !wallet.isSepolia) {
-      setHistory({ records: [], loading: false, error: "" });
-      return () => { active = false; };
-    }
-    setHistory({ records: [], loading: true, error: "" });
-    getContributionHistory(wallet.ethereum, wallet.account).then((records) => {
-      if (active) setHistory({ records, loading: false, error: "" });
-    }).catch((error) => {
-      if (active) setHistory({ records: [], loading: false, error: errorMessage(error) });
-    });
-    return () => { active = false; };
-  }, [wallet.ethereum, wallet.account, wallet.isSepolia, wallet.revision, refreshKey]);
-
-  const names = useMemo(() => new Map(campaigns.map((campaign) => [String(campaign.id), campaign.title])), [campaigns]);
-  const title = (id) => names.get(id) ?? `Campaign #${id}`;
-  const { donations, totalDonated, totalRefunded, supportedProjects } = contributionSummary(history.records);
-  const filtered = filterContributionRecords(history.records, names, search);
-  const state = !wallet.ethereum ? "wallet" : !wallet.account ? "account" : !wallet.isSepolia ? "network" : null;
-
-  return <section className="contributions-page" aria-labelledby="contributions-heading">
-    <div className="contributions-heading"><div><p className="eyebrow">WALLET ACTIVITY</p><h1 id="contributions-heading">My Contributions</h1><p>Track your donations and transaction history.</p></div><span className="contributions-network">Sepolia</span></div>
-    <ContractStatus wallet={wallet} />
-    {state === "wallet" ? <div className="contributions-empty" role="status"><h3>Connect your wallet</h3><p>Install or enable MetaMask to view your contributions.</p></div>
-      : state === "account" ? <div className="contributions-empty"><h3>Connect your wallet</h3><p>Connect MetaMask to see your donation history.</p><button onClick={wallet.connect} disabled={wallet.busy}>Connect Wallet</button></div>
-      : state === "network" ? <div className="contributions-empty"><h3>Switch to Sepolia</h3><p>Select the Ethereum Sepolia test network to load your history.</p><button onClick={wallet.switchToSepolia} disabled={wallet.busy}>Switch to Sepolia</button></div>
-      : <>
-        <p className="contributions-account">Wallet: <span title={wallet.account}>{wallet.account.slice(0, 6)}…{wallet.account.slice(-4)}</span></p>
-        <div className="contributions-stats"><div className="contributions-stat"><span>Total Donated</span><strong>{formatEther(totalDonated)} ETH</strong></div><div className="contributions-stat"><span>Projects Supported</span><strong>{supportedProjects}</strong></div><div className="contributions-stat"><span>Donation Transactions</span><strong>{donations.length}</strong></div></div>
-        <div className="contributions-toolbar"><div><h2>Contribution History</h2><p>{history.records.length} records · Total refunded {formatEther(totalRefunded)} ETH</p></div><button onClick={() => setRefreshKey((value) => value + 1)} disabled={history.loading}>Refresh</button></div>
-        <label className="contributions-search-label">Search campaigns or transaction hash<input className="contributions-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search campaigns or transaction hash..." /></label>
-        {history.loading ? <div className="list-state" role="status"><span className="loading-spinner" aria-hidden="true" /><h3>Loading contribution history…</h3><p>Reading your transactions from Sepolia.</p></div>
-          : history.error ? <div className="list-state error-state" role="alert"><h3>Unable to load contribution history</h3><p>{history.error}</p><button onClick={() => setRefreshKey((value) => value + 1)}>Try again</button></div>
-          : !history.records.length ? <div className="contributions-empty"><h3>No contributions yet</h3><p>Explore campaigns and make your first donation.</p><a className="button" href="#/">Explore Campaigns</a></div>
-          : <div className="contributions-table-wrap"><table className="contributions-table"><caption className="sr-only">Contribution history</caption><thead><tr><th>Campaign</th><th>Type</th><th>Amount</th><th>Date</th><th>Transaction</th></tr></thead><tbody>{filtered.map((record) => <tr key={record.id}><td><a href={`#/campaign/${record.campaignId}`}>{title(record.campaignId)}</a></td><td><span className={`contribution-type ${record.type === "Refund" ? "refunded" : ""}`}>{record.type}</span></td><td>{record.type === "Refund" ? "−" : "+"}{formatEther(record.amountWei)} ETH</td><td><time dateTime={new Date(record.timestamp * 1000).toISOString()}>{dateFormat.format(new Date(record.timestamp * 1000))}</time></td><td><a href={`https://sepolia.etherscan.io/tx/${record.transactionHash}`} target="_blank" rel="noopener noreferrer">View Tx ↗</a></td></tr>)}</tbody></table>{!filtered.length && <p role="status">No matching transactions found.</p>}</div>}
-      </>}
+export default function MyContributions({wallet,campaigns:provided,embedded=false}) {
+  const ownCampaigns=useCampaigns(wallet,provided===undefined);
+  const campaigns=provided ?? ownCampaigns.campaigns;
+  const history=useResource(wallet,signal=>getWalletActivity(wallet.ethereum,wallet.account,signal),[],Boolean(wallet.account));
+  const [search,setSearch]=useState("");
+  const records=history.data ?? [];
+  const names=useMemo(()=>new Map(campaigns.map(campaign=>[campaign.id,campaign.title])),[campaigns]);
+  const summary=contributionSummary(records);
+  const filtered=filterContributionRecords(records,names,search);
+  return <section className="contributions-page"><h2>My Contributions & Transaction History</h2>{!embedded && <><ContractStatus wallet={wallet}/><a href="#/profile">Open Profile</a></>}
+    {!wallet.account ? <p>Connect MetaMask to view your transactions.</p>:<><p>Wallet: <code>{wallet.account}</code></p><div className="contributions-stats"><div className="contributions-stat"><span>Total donated</span><strong>{history.data?`${formatEther(summary.totalDonated)} ETH`:"Unavailable"}</strong></div><div className="contributions-stat"><span>Projects supported</span><strong>{history.data?summary.supportedProjects:"Unavailable"}</strong></div><div className="contributions-stat"><span>Total refunded</span><strong>{history.data?`${formatEther(summary.totalRefunded)} ETH`:"Unavailable"}</strong></div></div>
+    <p>Donation counts are transaction events, not unique people. Historical contributions remain visible after withdrawal or refund.</p><button onClick={history.reload} disabled={history.loading}>Refresh history</button>
+    <label>Search campaign or transaction hash<input value={search} onChange={event=>setSearch(event.target.value)}/></label>
+    {history.loading && <p role="status">Loading complete wallet event history...</p>}{history.error && <p role="alert">{history.error} No partial history is shown.</p>}
+    {history.data && <><p>{summary.donations.length} donations / {records.length} wallet event records</p><div className="contributions-table-wrap"><table className="contributions-table"><caption>On-chain wallet activity</caption><thead><tr><th>Campaign</th><th>Action</th><th>Amount</th><th>On-chain time</th><th>Transaction</th></tr></thead><tbody>{filtered.map(record=><tr key={record.id}><td><a href={`#/campaign/${record.campaignId}`}>{names.get(record.campaignId) ?? `Campaign #${record.campaignId}`}</a></td><td>{record.type}</td><td>{record.type==="Created"?"--":`${formatEther(record.amountWei)} ETH`}</td><td>{new Date(record.timestamp*1000).toLocaleString()}</td><td><a href={`https://sepolia.etherscan.io/tx/${record.transactionHash}`} target="_blank" rel="noopener noreferrer">View transaction</a></td></tr>)}</tbody></table>{!filtered.length && <p>No matching transactions.</p>}</div></>}
+    </>}
   </section>;
 }

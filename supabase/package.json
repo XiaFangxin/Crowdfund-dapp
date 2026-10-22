@@ -1,0 +1,15 @@
+{
+  "name": "crowdfund-offchain",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "check": "node --check functions/_shared/core.js && node --check functions/_shared/handler.js && node --check functions/_shared/chain.js && node --check functions/interactions/index.ts"
+  },
+  "dependencies": {
+    "ethers": "6.17.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.3.9"
+  }
+}
