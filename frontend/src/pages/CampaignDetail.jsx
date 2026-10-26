@@ -23,10 +23,11 @@ export default function CampaignDetail({wallet,id}) {
   const updates=useResource(wallet,signal=>getCampaignUpdates(wallet.ethereum,id,signal),[id],isV2);
   const [amount,setAmount]=useState(""); const [metadata,setMetadata]=useState(""); const [update,setUpdate]=useState(""); const [preview,setPreview]=useState(null);
   const now=useNow(); const tx=useTransaction(); const campaign=data.data?.campaign; const contribution=data.data?.contribution ?? 0n;
-  const ready=contractConfigured && wallet.account && wallet.isSepolia && !tx.busy;
+  const unresolved=tx.status==="unknown";
+  const ready=Boolean(contractConfigured && wallet.ethereum && wallet.account && wallet.isSepolia && !tx.busy && !unresolved);
   const creator=campaign?.creator.toLowerCase()===wallet.account.toLowerCase();
   const ended=campaign && campaign.deadline<=now; const successful=campaign && campaign.amountRaised>=campaign.goal;
-  async function transact(action){const receipt=await tx.run(action);if(receipt){data.reload();updates.reload();}}
+  async function transact(action){if(!ready)return;const receipt=await tx.run(action);if(receipt){data.reload();updates.reload();}}
   const progress=campaign?fundingProgress(campaign.amountRaised,campaign.goal):null;
   return <section className="campaign-detail-page"><h1>Campaign #{id}</h1><ContractStatus wallet={wallet}/><WalletSignIn wallet={wallet}/>{offchainKey && <><Views campaignKey={offchainKey}/><FavoriteButton campaignKey={offchainKey}/><ReportDialog campaignKey={offchainKey}/></>}<button disabled={data.loading} onClick={()=>{data.reload();updates.reload();}}>Refresh chain data</button>
     {data.loading && <p role="status">Loading campaign...</p>}{data.error && <p role="alert">{data.error}</p>}
@@ -58,5 +59,6 @@ export default function CampaignDetail({wallet,id}) {
     </>}
     {offchainKey && <CommentSection campaignKey={offchainKey} wallet={wallet}/>}
     <TransactionStatus transaction={tx}/>
+    {unresolved && <p className="notice" role="alert">Your transaction may still be pending or already confirmed. Check the transaction link in Etherscan or MetaMask Activity before submitting again. Campaign actions are locked on this page while confirmation is unknown.</p>}
   </section>;
 }
