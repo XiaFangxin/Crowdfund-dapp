@@ -9,7 +9,7 @@ export default function useTransaction() {
     busy.current=true;
     if(active.current)setState({status:"signature",hash:"",error:""});
     try { return await action(update=>{if(!active.current && update.status === "signature") throw new Error("Page or wallet context changed before submission."); if(active.current)setState(update);}); }
-    catch(error) {if(active.current)setState(previous=>({...previous,status:error.code==="CONFIRMATION_UNKNOWN"?"unknown":"failed",error:errorMessage(error)}));return null;}
+    catch(error) {if(active.current)setState(previous=>({...previous,status:error.code==="CONFIRMATION_UNKNOWN"?"unknown":["4001","ACTION_REJECTED"].includes(String(error.code))?"rejected":"failed",error:errorMessage(error)}));return null;}
     finally {busy.current=false;}
   }
   return {...state,busy:["signature","submitted","confirming"].includes(state.status),run};

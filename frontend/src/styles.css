@@ -274,3 +274,485 @@ main > div > section.campaign-detail-page {
     font-size: 28px;
   }
 }
+
+/* Create campaign: guided, responsive form with field-level feedback. */
+main > div > section.create-campaign-page,
+main > section.create-campaign-page {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.create-campaign-page .create-page-heading {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.create-campaign-page .create-page-heading .eyebrow {
+  color: var(--color-accent-text);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.create-campaign-page .create-page-heading h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.6px;
+}
+
+.create-campaign-page .create-page-heading .page-subtitle {
+  max-width: 650px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.create-campaign-page .create-main,
+.create-campaign-page .create-guide {
+  min-width: 0;
+}
+
+.create-campaign-page .create-main {
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.create-campaign-page .create-main > .contract-status {
+  margin-top: 0;
+  background: var(--color-background);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.create-campaign-page .create-wallet-note {
+  margin: 0 0 28px;
+  padding: 16px 18px;
+  border: 1px solid #c7d2fe;
+  border-radius: var(--control-radius);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-wallet-note p {
+  margin: 0;
+}
+
+.create-campaign-page .create-wallet-note button {
+  max-width: 100%;
+  margin: 12px 0 0;
+  white-space: normal;
+}
+
+.create-campaign-page .create-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.create-campaign-page .create-field {
+  min-width: 0;
+}
+
+.create-campaign-page .create-field > label {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.create-campaign-page .create-field input,
+.create-campaign-page .create-field textarea,
+.create-campaign-page .create-field select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--color-input);
+  border-radius: var(--control-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 24px;
+  transition: border-color .15s, background .15s;
+}
+
+.create-campaign-page .create-field textarea {
+  min-height: 168px;
+  resize: vertical;
+}
+
+.create-campaign-page .create-field input::placeholder,
+.create-campaign-page .create-field textarea::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
+.create-campaign-page .create-field input:disabled,
+.create-campaign-page .create-field textarea:disabled,
+.create-campaign-page .create-field select:disabled {
+  background: var(--color-background);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.create-campaign-page .create-field [aria-invalid="true"] {
+  border-color: #dc2626;
+  background: #fffafa;
+}
+
+.create-campaign-page .create-field-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px 16px;
+  margin-top: 8px;
+}
+
+.create-campaign-page .create-help,
+.create-campaign-page .create-counter {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.create-campaign-page .create-help {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-counter {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.create-campaign-page .create-error {
+  margin: 8px 0 0;
+  color: #b91c1c;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.create-campaign-page .create-error-summary {
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  border: 1px solid #fecaca;
+  border-radius: var(--control-radius);
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-error-summary p {
+  margin: 0;
+}
+
+.create-campaign-page .create-error-summary ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.create-campaign-page .create-error-summary a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.create-campaign-page .create-submit-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 4px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.create-campaign-page button.create-submit {
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 14px 20px;
+  white-space: normal;
+}
+
+.create-campaign-page .create-submit-row > p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.create-campaign-page .create-guide {
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-guide h2 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.create-campaign-page .create-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: create-step;
+}
+
+.create-campaign-page .create-steps > li {
+  position: relative;
+  min-height: 32px;
+  padding-left: 46px;
+  counter-increment: create-step;
+}
+
+.create-campaign-page .create-steps > li::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  font-size: 13px;
+  font-weight: 600;
+  content: counter(create-step);
+}
+
+.create-campaign-page .create-steps strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.create-campaign-page .create-steps p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-guide-note {
+  margin: 24px 0 0;
+  padding: 16px;
+  border-radius: var(--control-radius);
+  background: var(--color-background);
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-guide-note p {
+  margin: 0;
+}
+
+.create-campaign-page .create-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--control-radius);
+  background: var(--color-background);
+}
+
+.create-campaign-page .create-metadata > h2,
+.create-campaign-page .create-metadata > h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.create-campaign-page .create-metadata > p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-metadata button {
+  align-self: flex-start;
+  max-width: 100%;
+  margin: 0;
+  white-space: normal;
+}
+
+.create-campaign-page .create-metadata-code {
+  min-width: 0;
+  margin-top: 20px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.create-campaign-page .create-metadata-code summary {
+  padding: 8px 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.create-campaign-page .create-metadata-code pre,
+.create-campaign-page .create-metadata-code details > pre {
+  max-width: 100%;
+  margin: 8px 0 0;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--control-radius);
+  background: var(--color-background);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-preview {
+  min-width: 0;
+  margin-top: 24px;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--control-radius);
+}
+
+.create-campaign-page .create-success {
+  padding: 24px;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--control-radius);
+  background: #f0fdf4;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-success h2 {
+  margin: 0 0 12px;
+  color: #166534;
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.create-campaign-page .create-success > p {
+  margin: 0 0 20px;
+  color: #166534;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-success .create-field {
+  margin-top: 24px;
+}
+
+.create-campaign-page .create-success-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.create-campaign-page .create-success-actions button {
+  margin: 0;
+}
+
+.create-campaign-page .create-success-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-size: 14px;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.create-campaign-page .transaction-status {
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .create-campaign-page .create-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .create-campaign-page .create-page-heading h1 {
+    font-size: 30px;
+  }
+
+  .create-campaign-page .create-main,
+  .create-campaign-page .create-guide {
+    padding: 20px;
+  }
+
+  .create-campaign-page .create-field-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .create-campaign-page .create-field-meta {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  .create-campaign-page .create-counter {
+    margin-left: auto;
+  }
+
+  .create-campaign-page .create-metadata,
+  .create-campaign-page .create-success {
+    padding: 16px;
+  }
+
+  .create-campaign-page .create-wallet-note {
+    padding: 14px;
+  }
+
+  .create-campaign-page .create-success-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
