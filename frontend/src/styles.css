@@ -756,3 +756,712 @@ main > section.create-campaign-page {
     flex-direction: column;
   }
 }
+
+/* Profile: wallet identity, accessible sections, and chain-backed records. */
+main > div > section.profile-page,
+main > section.profile-page {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.profile-page .profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.profile-page .profile-eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-accent-text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.profile-page .profile-header h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.6px;
+}
+
+.profile-page .profile-header p:not(.profile-eyebrow) {
+  max-width: 700px;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.profile-page .profile-refresh {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.profile-page .profile-account-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.profile-page .profile-account-identity {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  min-width: 0;
+}
+
+.profile-page .profile-account-identity > div {
+  min-width: 0;
+}
+
+.profile-page .profile-wallet-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid #e0e7ff;
+  border-radius: 16px;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  font-size: 28px;
+}
+
+.profile-page .profile-account-label {
+  margin: 0 0 6px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .profile-address {
+  display: block;
+  color: var(--color-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.profile-page a.profile-address:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.profile-page .profile-account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-top: 16px;
+}
+
+.profile-page .profile-account-actions button {
+  min-height: 40px;
+  margin: 0;
+  padding: 9px 14px;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.profile-page .profile-account-actions button:hover:not(:disabled) {
+  background: #e0e7ff;
+}
+
+.profile-page .profile-account-actions a {
+  font-size: 13px;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.profile-page .profile-network {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.profile-page .profile-network::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.profile-page .profile-network.is-connected {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.profile-page .profile-account-note,
+.profile-page .profile-copy-feedback {
+  margin: 12px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-copy-feedback {
+  color: var(--color-accent-text);
+}
+
+.profile-page .profile-copy-feedback:empty {
+  margin: 0;
+}
+
+.profile-page .profile-contract-details {
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-contract-details > summary {
+  width: fit-content;
+  min-height: 40px;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.profile-page .profile-contract-details > summary:hover {
+  color: var(--color-primary);
+}
+
+.profile-page .profile-contract-details .contract-status {
+  margin: 4px 0 16px;
+  padding: 16px;
+  background: var(--color-surface);
+  line-height: 1.7;
+}
+
+.profile-page .profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 24px 0 32px;
+}
+
+.profile-page .profile-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-stat > span {
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .profile-stat > strong {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.profile-page .profile-stat > small {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.profile-page .profile-tabs {
+  display: flex;
+  gap: 6px;
+  max-width: 100%;
+  margin: 28px 0 20px;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.profile-page .profile-tabs button {
+  display: inline-flex;
+  flex: 1 0 auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  margin: 0;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.profile-page .profile-tabs button:hover {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+.profile-page .profile-tabs button[aria-selected="true"] {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.profile-page .profile-tabs button:focus-visible {
+  outline-offset: -3px;
+}
+
+.profile-page .profile-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  font-size: 11px;
+  line-height: 20px;
+}
+
+.profile-page [aria-selected="true"] .profile-tab-count {
+  background: #e0e7ff;
+}
+
+.profile-page .profile-panel {
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-panel[hidden] {
+  display: none;
+}
+
+.profile-page .profile-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.profile-page .profile-panel-heading h2,
+.profile-page .contributions-page > h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.profile-page .profile-panel-heading p {
+  max-width: 700px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.profile-page .profile-panel-heading > .button {
+  flex-shrink: 0;
+}
+
+.profile-page .profile-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 240px;
+  padding: 32px 20px;
+  border: 1px dashed var(--color-input);
+  border-radius: 12px;
+  background: var(--color-background);
+  text-align: center;
+}
+
+.profile-page .profile-empty h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.profile-page .profile-empty p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.profile-page .profile-empty button {
+  margin: 0;
+}
+
+.profile-page .profile-notice {
+  margin: 16px 0;
+  padding: 16px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-background);
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-notice p {
+  margin: 0;
+}
+
+.profile-page .profile-notice[role="alert"] {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.profile-page .profile-refund-summary {
+  padding: 20px;
+  border: 1px solid #c7d2fe;
+  border-radius: 12px;
+  background: var(--color-accent);
+}
+
+.profile-page .profile-refund-summary > strong {
+  color: var(--color-accent-text);
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.profile-page .profile-refund-summary p {
+  margin: 8px 0 0;
+  color: var(--color-accent-text);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.profile-page .profile-refund-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-page .profile-refund-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.profile-page .profile-refund-info {
+  min-width: 0;
+}
+
+.profile-page .profile-refund-info h3 {
+  margin: 8px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.profile-page .profile-refund-info h3 > a {
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.profile-page .profile-refund-info h3 > a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.profile-page .profile-refund-info p {
+  margin: 8px 0 6px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .profile-refund-info small {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.profile-page .profile-refund-action {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  max-width: 100%;
+}
+
+.profile-page .profile-refund-action strong {
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-refund-action button {
+  margin: 0;
+}
+
+.profile-page .profile-refund-help {
+  margin: 20px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.profile-page .campaign-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.profile-page .contributions-page {
+  min-width: 0;
+  gap: 20px;
+}
+
+.profile-page .contributions-page > p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.profile-page .contributions-stats {
+  gap: 16px;
+}
+
+.profile-page .contributions-stat {
+  min-width: 0;
+  min-height: 130px;
+  padding: 20px;
+  background: var(--color-background);
+}
+
+.profile-page .contributions-stat strong {
+  font-size: 24px;
+}
+
+.profile-page .history-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.profile-page .history-toolbar button {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.profile-page .history-search {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  max-width: 560px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .history-search input {
+  width: 100%;
+  max-width: none;
+  min-height: 48px;
+  margin: 8px 0 0;
+  background: var(--color-surface);
+}
+
+.profile-page .history-search label {
+  margin: 0;
+}
+
+.profile-page .history-results {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-page .history-results > p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.profile-page .history-count {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .contributions-table-wrap {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.profile-page .contributions-table caption {
+  padding: 16px;
+  text-align: left;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .contributions-table th,
+.profile-page .contributions-table td {
+  max-width: 270px;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .offchain-panel {
+  margin: 20px 0 0;
+}
+
+.profile-page .record-list > li {
+  overflow-wrap: anywhere;
+}
+
+.profile-page .transaction-status {
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@media (max-width: 800px) {
+  .profile-page .profile-account-card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-page .profile-network {
+    margin-left: 76px;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-page .profile-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-page .profile-header h1 {
+    font-size: 30px;
+  }
+
+  .profile-page .profile-account-card,
+  .profile-page .profile-panel {
+    padding: 20px;
+  }
+
+  .profile-page .profile-account-identity {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .profile-page .profile-wallet-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .profile-page .profile-address {
+    font-size: 14px;
+  }
+
+  .profile-page .profile-network {
+    margin-left: 0;
+  }
+
+  .profile-page .profile-stats {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin: 20px 0 24px;
+  }
+
+  .profile-page .profile-stat {
+    gap: 8px;
+    padding: 20px;
+  }
+
+  .profile-page .profile-tabs button {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .profile-page .profile-panel-heading,
+  .profile-page .history-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profile-page .profile-panel-heading h2,
+  .profile-page .contributions-page > h2 {
+    font-size: 22px;
+  }
+
+  .profile-page .profile-empty {
+    min-height: 220px;
+    padding: 28px 16px;
+  }
+
+  .profile-page .profile-refund-item {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .profile-page .profile-refund-action {
+    align-items: flex-start;
+  }
+
+  .profile-page .profile-refund-action button {
+    width: 100%;
+  }
+
+  .profile-page .campaign-grid,
+  .profile-page .contributions-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-page .campaign-card {
+    padding: 20px;
+  }
+
+  .profile-page .history-search {
+    width: 100%;
+  }
+
+  .profile-page .profile-notice {
+    padding: 14px 16px;
+  }
+}
