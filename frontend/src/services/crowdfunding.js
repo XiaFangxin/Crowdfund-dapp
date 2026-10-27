@@ -101,10 +101,21 @@ export async function createCampaign(ethereum, account, {title, description, goa
     args.push(BigInt(categoryId));
   }
   const receipt = await write(ethereum, account, "createCampaign", args, emit);
+  // A confirmed creation must remain successful even when its ID cannot be read.
+  // Returning null lets the UI preserve the receipt and prevent duplicate creation.
+  return {receipt, campaignId: campaignIdFromReceipt(receipt)};
+}
+export function campaignIdFromReceipt(receipt) {
   const abi = new Contract(crowdfundingAddress, (isV2 ? v2 : v1).abi).interface;
-  const created = receipt.logs.filter(log => log.address.toLowerCase() === crowdfundingAddress.toLowerCase()).map(log => {try {return abi.parseLog(log);} catch {return null;}}).find(log => log?.name === "CampaignCreated");
-  if (!created) throw new Error("Creation confirmed but campaign ID could not be parsed. Check the receipt before creating again.");
-  return {receipt, campaignId: String(created.args.campaignId)};
+  for (const log of Array.isArray(receipt?.logs) ? receipt.logs : []) {
+    if (typeof log?.address !== "string" || log.address.toLowerCase() !== crowdfundingAddress.toLowerCase()) continue;
+    try {
+      const created = abi.parseLog(log);
+      const id = created?.name === "CampaignCreated" ? created.args.campaignId : null;
+      if (typeof id === "bigint" && id >= 0n) return String(id);
+    } catch { /* Malformed logs do not turn a confirmed transaction into a failure. */ }
+  }
+  return null;
 }
 export function contribute(ethereum, account, id, amount, emit) {
   const value = parseEther(amount); if (value <= 0n) throw new Error("Contribution must be positive.");

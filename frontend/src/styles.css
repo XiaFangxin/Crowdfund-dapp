@@ -180,3 +180,1288 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .offchain-panel input[type="checkbox"] { width: auto; display: inline-block; }
 .offchain-panel blockquote { border-left: 3px solid var(--color-border); padding-left: 16px; margin-left: 0; }
 @media (max-width: 500px) { .offchain-panel,.offchain-comment { padding: 12px; } .offchain-comment .offchain-comment { margin-left: 0; } }
+/* 详情页排版 */
+main > div > section.campaign-detail-page {
+  padding: 32px;
+}
+
+.campaign-detail-page > h1 {
+  margin: 0 0 24px;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.campaign-detail-page > h2 {
+  margin: 28px 0 12px;
+  font-size: 26px;
+}
+
+.campaign-detail-page > p {
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.campaign-detail-page .detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+  gap: 32px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.campaign-detail-page .detail-overview,
+.campaign-detail-page .detail-funding {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.campaign-detail-page .detail-overview > h2 {
+  margin: 0 0 16px;
+  font-size: 28px;
+  line-height: 1.3;
+}
+
+.campaign-detail-page .detail-overview > p,
+.campaign-detail-page .detail-funding > p {
+  line-height: 1.7;
+}
+
+.campaign-detail-page .detail-funding {
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-background);
+}
+
+.campaign-detail-page .detail-funding > form {
+  margin: 24px 0 16px;
+}
+
+.campaign-detail-page .detail-funding input {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  background: var(--color-surface);
+}
+
+.campaign-detail-page .detail-funding button {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.campaign-detail-page .detail-funding > form > button {
+  width: 100%;
+  margin-right: 0;
+}
+
+@media (max-width: 800px) {
+  .campaign-detail-page .detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .campaign-detail-page .detail-funding {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  main > div > section.campaign-detail-page {
+    padding: 20px;
+  }
+
+  .campaign-detail-page > h1 {
+    font-size: 28px;
+  }
+}
+
+/* Create campaign: guided, responsive form with field-level feedback. */
+main > div > section.create-campaign-page,
+main > section.create-campaign-page {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.create-campaign-page .create-page-heading {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.create-campaign-page .create-page-heading .eyebrow {
+  color: var(--color-accent-text);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.create-campaign-page .create-page-heading h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.6px;
+}
+
+.create-campaign-page .create-page-heading .page-subtitle {
+  max-width: 650px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.create-campaign-page .create-main,
+.create-campaign-page .create-guide {
+  min-width: 0;
+}
+
+.create-campaign-page .create-main {
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.create-campaign-page .create-main > .contract-status {
+  margin-top: 0;
+  background: var(--color-background);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.create-campaign-page .create-wallet-note {
+  margin: 0 0 28px;
+  padding: 16px 18px;
+  border: 1px solid #c7d2fe;
+  border-radius: var(--control-radius);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-wallet-note p {
+  margin: 0;
+}
+
+.create-campaign-page .create-wallet-note button {
+  max-width: 100%;
+  margin: 12px 0 0;
+  white-space: normal;
+}
+
+.create-campaign-page .create-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.create-campaign-page .create-field {
+  min-width: 0;
+}
+
+.create-campaign-page .create-field > label {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.create-campaign-page .create-field input,
+.create-campaign-page .create-field textarea,
+.create-campaign-page .create-field select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--color-input);
+  border-radius: var(--control-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 24px;
+  transition: border-color .15s, background .15s;
+}
+
+.create-campaign-page .create-field textarea {
+  min-height: 168px;
+  resize: vertical;
+}
+
+.create-campaign-page .create-field input::placeholder,
+.create-campaign-page .create-field textarea::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
+.create-campaign-page .create-field input:disabled,
+.create-campaign-page .create-field textarea:disabled,
+.create-campaign-page .create-field select:disabled {
+  background: var(--color-background);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.create-campaign-page .create-field [aria-invalid="true"] {
+  border-color: #dc2626;
+  background: #fffafa;
+}
+
+.create-campaign-page .create-field-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px 16px;
+  margin-top: 8px;
+}
+
+.create-campaign-page .create-help,
+.create-campaign-page .create-counter {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.create-campaign-page .create-help {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-counter {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.create-campaign-page .create-error {
+  margin: 8px 0 0;
+  color: #b91c1c;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.create-campaign-page .create-error-summary {
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  border: 1px solid #fecaca;
+  border-radius: var(--control-radius);
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-error-summary p {
+  margin: 0;
+}
+
+.create-campaign-page .create-error-summary ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.create-campaign-page .create-error-summary a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.create-campaign-page .create-submit-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 4px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.create-campaign-page button.create-submit {
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 14px 20px;
+  white-space: normal;
+}
+
+.create-campaign-page .create-submit-row > p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.create-campaign-page .create-guide {
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-guide h2 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.create-campaign-page .create-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: create-step;
+}
+
+.create-campaign-page .create-steps > li {
+  position: relative;
+  min-height: 32px;
+  padding-left: 46px;
+  counter-increment: create-step;
+}
+
+.create-campaign-page .create-steps > li::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  font-size: 13px;
+  font-weight: 600;
+  content: counter(create-step);
+}
+
+.create-campaign-page .create-steps strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.create-campaign-page .create-steps p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-guide-note {
+  margin: 24px 0 0;
+  padding: 16px;
+  border-radius: var(--control-radius);
+  background: var(--color-background);
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-guide-note p {
+  margin: 0;
+}
+
+.create-campaign-page .create-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--control-radius);
+  background: var(--color-background);
+}
+
+.create-campaign-page .create-metadata > h2,
+.create-campaign-page .create-metadata > h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.create-campaign-page .create-metadata > p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-metadata button {
+  align-self: flex-start;
+  max-width: 100%;
+  margin: 0;
+  white-space: normal;
+}
+
+.create-campaign-page .create-metadata-code {
+  min-width: 0;
+  margin-top: 20px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.create-campaign-page .create-metadata-code summary {
+  padding: 8px 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.create-campaign-page .create-metadata-code pre,
+.create-campaign-page .create-metadata-code details > pre {
+  max-width: 100%;
+  margin: 8px 0 0;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--control-radius);
+  background: var(--color-background);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-preview {
+  min-width: 0;
+  margin-top: 24px;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--control-radius);
+}
+
+.create-campaign-page .create-success {
+  padding: 24px;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--control-radius);
+  background: #f0fdf4;
+  overflow-wrap: anywhere;
+}
+
+.create-campaign-page .create-success h2 {
+  margin: 0 0 12px;
+  color: #166534;
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.create-campaign-page .create-success > p {
+  margin: 0 0 20px;
+  color: #166534;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.create-campaign-page .create-success .create-field {
+  margin-top: 24px;
+}
+
+.create-campaign-page .create-success-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.create-campaign-page .create-success-actions button {
+  margin: 0;
+}
+
+.create-campaign-page .create-success-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-size: 14px;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.create-campaign-page .transaction-status {
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .create-campaign-page .create-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .create-campaign-page .create-page-heading h1 {
+    font-size: 30px;
+  }
+
+  .create-campaign-page .create-main,
+  .create-campaign-page .create-guide {
+    padding: 20px;
+  }
+
+  .create-campaign-page .create-field-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .create-campaign-page .create-field-meta {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  .create-campaign-page .create-counter {
+    margin-left: auto;
+  }
+
+  .create-campaign-page .create-metadata,
+  .create-campaign-page .create-success {
+    padding: 16px;
+  }
+
+  .create-campaign-page .create-wallet-note {
+    padding: 14px;
+  }
+
+  .create-campaign-page .create-success-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+/* Profile: wallet identity, accessible sections, and chain-backed records. */
+main > div > section.profile-page,
+main > section.profile-page {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.profile-page .profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.profile-page .profile-eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-accent-text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.profile-page .profile-header h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.6px;
+}
+
+.profile-page .profile-header p:not(.profile-eyebrow) {
+  max-width: 700px;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.profile-page .profile-refresh {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.profile-page .profile-account-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.profile-page .profile-account-identity {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  min-width: 0;
+}
+
+.profile-page .profile-account-identity > div {
+  min-width: 0;
+}
+
+.profile-page .profile-wallet-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid #e0e7ff;
+  border-radius: 16px;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  font-size: 28px;
+}
+
+.profile-page .profile-account-label {
+  margin: 0 0 6px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .profile-address {
+  display: block;
+  color: var(--color-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.profile-page a.profile-address:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.profile-page .profile-account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-top: 16px;
+}
+
+.profile-page .profile-account-actions button {
+  min-height: 40px;
+  margin: 0;
+  padding: 9px 14px;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.profile-page .profile-account-actions button:hover:not(:disabled) {
+  background: #e0e7ff;
+}
+
+.profile-page .profile-account-actions a {
+  font-size: 13px;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.profile-page .profile-network {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.profile-page .profile-network::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.profile-page .profile-network.is-connected {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.profile-page .profile-account-note,
+.profile-page .profile-copy-feedback {
+  margin: 12px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-copy-feedback {
+  color: var(--color-accent-text);
+}
+
+.profile-page .profile-copy-feedback:empty {
+  margin: 0;
+}
+
+.profile-page .profile-contract-details {
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-contract-details > summary {
+  width: fit-content;
+  min-height: 40px;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.profile-page .profile-contract-details > summary:hover {
+  color: var(--color-primary);
+}
+
+.profile-page .profile-contract-details .contract-status {
+  margin: 4px 0 16px;
+  padding: 16px;
+  background: var(--color-surface);
+  line-height: 1.7;
+}
+
+.profile-page .profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 24px 0 32px;
+}
+
+.profile-page .profile-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-stat > span {
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .profile-stat > strong {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.profile-page .profile-stat > small {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.profile-page .profile-tabs {
+  display: flex;
+  gap: 6px;
+  max-width: 100%;
+  margin: 28px 0 20px;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.profile-page .profile-tabs button {
+  display: inline-flex;
+  flex: 1 0 auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  margin: 0;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.profile-page .profile-tabs button:hover {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+.profile-page .profile-tabs button[aria-selected="true"] {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.profile-page .profile-tabs button:focus-visible {
+  outline-offset: -3px;
+}
+
+.profile-page .profile-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  font-size: 11px;
+  line-height: 20px;
+}
+
+.profile-page [aria-selected="true"] .profile-tab-count {
+  background: #e0e7ff;
+}
+
+.profile-page .profile-panel {
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-panel[hidden] {
+  display: none;
+}
+
+.profile-page .profile-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.profile-page .profile-panel-heading h2,
+.profile-page .contributions-page > h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.profile-page .profile-panel-heading p {
+  max-width: 700px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.profile-page .profile-panel-heading > .button {
+  flex-shrink: 0;
+}
+
+.profile-page .profile-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 240px;
+  padding: 32px 20px;
+  border: 1px dashed var(--color-input);
+  border-radius: 12px;
+  background: var(--color-background);
+  text-align: center;
+}
+
+.profile-page .profile-empty h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.profile-page .profile-empty p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.profile-page .profile-empty button {
+  margin: 0;
+}
+
+.profile-page .profile-notice {
+  margin: 16px 0;
+  padding: 16px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-background);
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-notice p {
+  margin: 0;
+}
+
+.profile-page .profile-notice[role="alert"] {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.profile-page .profile-refund-summary {
+  padding: 20px;
+  border: 1px solid #c7d2fe;
+  border-radius: 12px;
+  background: var(--color-accent);
+}
+
+.profile-page .profile-refund-summary > strong {
+  color: var(--color-accent-text);
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.profile-page .profile-refund-summary p {
+  margin: 8px 0 0;
+  color: var(--color-accent-text);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.profile-page .profile-refund-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-page .profile-refund-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.profile-page .profile-refund-info {
+  min-width: 0;
+}
+
+.profile-page .profile-refund-info h3 {
+  margin: 8px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.profile-page .profile-refund-info h3 > a {
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.profile-page .profile-refund-info h3 > a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.profile-page .profile-refund-info p {
+  margin: 8px 0 6px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .profile-refund-info small {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.profile-page .profile-refund-action {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  max-width: 100%;
+}
+
+.profile-page .profile-refund-action strong {
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .profile-refund-action button {
+  margin: 0;
+}
+
+.profile-page .profile-refund-help {
+  margin: 20px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.profile-page .campaign-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.profile-page .contributions-page {
+  min-width: 0;
+  gap: 20px;
+}
+
+.profile-page .contributions-page > p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.profile-page .contributions-stats {
+  gap: 16px;
+}
+
+.profile-page .contributions-stat {
+  min-width: 0;
+  min-height: 130px;
+  padding: 20px;
+  background: var(--color-background);
+}
+
+.profile-page .contributions-stat strong {
+  font-size: 24px;
+}
+
+.profile-page .history-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.profile-page .history-toolbar button {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.profile-page .history-search {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  max-width: 560px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .history-search input {
+  width: 100%;
+  max-width: none;
+  min-height: 48px;
+  margin: 8px 0 0;
+  background: var(--color-surface);
+}
+
+.profile-page .history-search label {
+  margin: 0;
+}
+
+.profile-page .history-results {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-page .history-results > p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.profile-page .history-count {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .contributions-table-wrap {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.profile-page .contributions-table caption {
+  padding: 16px;
+  text-align: left;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.profile-page .contributions-table th,
+.profile-page .contributions-table td {
+  max-width: 270px;
+  overflow-wrap: anywhere;
+}
+
+.profile-page .offchain-panel {
+  margin: 20px 0 0;
+}
+
+.profile-page .record-list > li {
+  overflow-wrap: anywhere;
+}
+
+.profile-page .transaction-status {
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@media (max-width: 800px) {
+  .profile-page .profile-account-card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-page .profile-network {
+    margin-left: 76px;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-page .profile-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-page .profile-header h1 {
+    font-size: 30px;
+  }
+
+  .profile-page .profile-account-card,
+  .profile-page .profile-panel {
+    padding: 20px;
+  }
+
+  .profile-page .profile-account-identity {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .profile-page .profile-wallet-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .profile-page .profile-address {
+    font-size: 14px;
+  }
+
+  .profile-page .profile-network {
+    margin-left: 0;
+  }
+
+  .profile-page .profile-stats {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin: 20px 0 24px;
+  }
+
+  .profile-page .profile-stat {
+    gap: 8px;
+    padding: 20px;
+  }
+
+  .profile-page .profile-tabs button {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .profile-page .profile-panel-heading,
+  .profile-page .history-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profile-page .profile-panel-heading h2,
+  .profile-page .contributions-page > h2 {
+    font-size: 22px;
+  }
+
+  .profile-page .profile-empty {
+    min-height: 220px;
+    padding: 28px 16px;
+  }
+
+  .profile-page .profile-refund-item {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .profile-page .profile-refund-action {
+    align-items: flex-start;
+  }
+
+  .profile-page .profile-refund-action button {
+    width: 100%;
+  }
+
+  .profile-page .campaign-grid,
+  .profile-page .contributions-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-page .campaign-card {
+    padding: 20px;
+  }
+
+  .profile-page .history-search {
+    width: 100%;
+  }
+
+  .profile-page .profile-notice {
+    padding: 14px 16px;
+  }
+}
