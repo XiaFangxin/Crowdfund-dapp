@@ -45,3 +45,30 @@ test("V2 services read the real ABI registry and campaign additions using only a
     assert.ok(!methods.includes("eth_sendTransaction"));assert.ok(!methods.includes("eth_requestAccounts"));
   }finally{await server.close();for(const [key,value] of Object.entries(previous)){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
+
+test("confirmed creation receipt parsing accepts ID zero and keeps missing or malformed IDs non-fatal",async()=>{
+  const env={VITE_CROWDFUNDING_VERSION:"v2",VITE_CROWDFUNDING_V2_ADDRESS:"0x0000000000000000000000000000000000000001",VITE_CROWDFUNDING_V2_DEPLOY_BLOCK:"0"};
+  const previous=Object.fromEntries(Object.keys(env).map(key=>[key,process.env[key]]));
+  Object.assign(process.env,env);
+  const server=await createServer({configFile:false,envFile:false,server:{middlewareMode:true,hmr:false,watch:null},optimizeDeps:{noDiscovery:true,include:[]}});
+  try{
+    const {abi}=JSON.parse(await readFile(new URL("../src/contracts/CrowdfundingV2.json",import.meta.url)));
+    const iface=new Interface(abi);
+    const account="0x0000000000000000000000000000000000000002";
+    const address=env.VITE_CROWDFUNDING_V2_ADDRESS;
+    const event=iface.encodeEventLog(iface.getEvent("CampaignCreated"),[0n,account,"Garden",100n,2000000000n]);
+    const unrelated=iface.encodeEventLog(iface.getEvent("Contributed"),[0n,account,12n]);
+    const {campaignIdFromReceipt}=await server.ssrLoadModule("/src/services/crowdfunding.js");
+    const receipt={status:1,hash:`0x${"c".repeat(64)}`,logs:[{address,...event}]};
+    assert.equal(campaignIdFromReceipt(receipt),"0");
+    for(const logs of [[],[{address:account,...event}],[{address,...unrelated}],[{address,topics:event.topics,data:"0x"}],[{...event}],[null]]){
+      const confirmed={...receipt,logs};
+      assert.equal(campaignIdFromReceipt(confirmed),null);
+      assert.equal(confirmed.status,1);
+      assert.equal(confirmed.hash,receipt.hash);
+    }
+    // A malformed or unrelated first log must not hide a later valid creation.
+    assert.equal(campaignIdFromReceipt({...receipt,logs:[{address,topics:event.topics,data:"0x"},{address,...event}]}),"0");
+    assert.equal(campaignIdFromReceipt({...receipt,logs:undefined}),null);
+  }finally{await server.close();for(const [key,value] of Object.entries(previous)){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});
