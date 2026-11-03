@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { WalletSessionProvider } from "./hooks/useWalletSession.jsx";
 import useWallet from "./hooks/useWallet.js";
 import Navbar from "./components/Navbar.jsx";
+import PendingTransaction from "./components/PendingTransaction.jsx";
 import Home from "./pages/Home.jsx";
 import CreateCampaign from "./pages/CreateCampaign.jsx";
 import CampaignDetail from "./pages/CampaignDetail.jsx";
@@ -30,7 +31,7 @@ function App() {
   else if (route === "/my-contributions") page = <MyContributions wallet={wallet} />;
   else if (detail) page = <CampaignDetail key={detail[1]} wallet={wallet} id={detail[1]} />;
   else page = <section><h2>Page not found</h2><a href="#/">Back to Home</a></section>;
-  return <WalletSessionProvider wallet={wallet}><Navbar wallet={wallet} route={route} /><main id="main-content"><div key={`${contractKey}:${wallet.account}:${wallet.chainId}:${wallet.revision}:${route}`}>{page}</div></main>
+  return <WalletSessionProvider wallet={wallet}><Navbar wallet={wallet} route={route} /><main id="main-content">{wallet.account && <PendingTransaction key={`${contractKey}:${wallet.account}:${wallet.chainId}`} wallet={wallet}/>}<div key={`${contractKey}:${wallet.account}:${wallet.chainId}:${wallet.revision}:${route}`}>{page}</div></main>
     <footer className="site-footer"><span>Crowdfund · A community crowdfunding demo</span><span>Test network · Sepolia</span></footer></WalletSessionProvider>;
 }
 

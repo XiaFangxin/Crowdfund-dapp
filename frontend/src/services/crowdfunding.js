@@ -1,4 +1,5 @@
-import { BrowserProvider, Contract, parseEther } from "ethers";
+import { BrowserProvider, Contract, parseEther, getAddress, ZeroAddress } from "ethers";
+import { pendingKey, readPending, assertPendingStorage, savePending, clearPending } from "./pendingTransactions.js";
 import v1 from "../contracts/Crowdfunding.json";
 import v2 from "../contracts/CrowdfundingV2.json";
 import { crowdfundingAddress, contractConfigured, contractConfigMessage, deploymentBlock, isV2, contractKey } from "../config/contracts.js";
@@ -37,6 +38,9 @@ async function write(ethereum, account, method, args, emit, v2Only = false) {
   if (v2Only) requireV2();
   if (!account) throw new Error("Connect your wallet first.");
   const key = `${contractKey}:${account.toLowerCase()}`;
+  const savedKey = pendingKey(SEPOLIA_CHAIN_ID, crowdfundingAddress, account);
+  if (readPending(savedKey)) throw new Error("An unresolved transaction is saved for this wallet. Check it in the pending transaction panel before sending again.");
+  assertPendingStorage(savedKey);
   if (writes.has(key)) throw new Error("A transaction for this wallet is still pending. Check MetaMask before retrying.");
   writes.add(key);
   try {
@@ -45,8 +49,14 @@ async function write(ethereum, account, method, args, emit, v2Only = false) {
       // Recheck immediately before asking MetaMask to sign.
       const [accounts, chain] = await Promise.all([ethereum.request({method: "eth_accounts"}), ethereum.request({method: "eth_chainId"})]);
       if (accounts[0]?.toLowerCase() !== account.toLowerCase() || Number(chain) !== SEPOLIA_CHAIN_ID) throw new Error("Wallet or network changed. Retry with the current account.");
-      return contract[method](...args);
-    }, emit);
+      const sent = await contract[method](...args);
+      savePending(savedKey, {hash:sent.hash, method, nonce:sent.nonce, savedAt:Date.now()});
+      return sent;
+    }, update => {
+      if (["submitted", "confirming"].includes(update.status) && update.hash) savePending(savedKey, {...readPending(savedKey), hash:update.hash, method, savedAt:Date.now()});
+      if (update.status === "success") clearPending(savedKey);
+      emit?.(update);
+    });
   } finally { writes.delete(key); }
 }
 function campaignModel(id, result) {
@@ -85,6 +95,33 @@ export async function listCategories(ethereum, signal) {
 export async function getOwnership(ethereum) {
   requireV2(); const c = await getContract(ethereum);
   const [owner, pendingOwner] = await Promise.all([c.owner(), c.pendingOwner()]); return {owner, pendingOwner};
+}
+export function ownershipTarget(value) {
+  let address;
+  try { address = getAddress(value.trim()); } catch { throw new Error("Enter a valid administrator address."); }
+  if (address === ZeroAddress) throw new Error("The administrator address cannot be zero.");
+  return address;
+}
+export const transferOwnership = (e,a,target,emit) => write(e,a,"transferOwnership",[ownershipTarget(target)],emit,true);
+export const acceptOwnership = (e,a,emit) => write(e,a,"acceptOwnership",[],emit,true);
+export async function recoverPendingTransaction(ethereum, account, replacementHash = "") {
+  const key = pendingKey(SEPOLIA_CHAIN_ID, crowdfundingAddress, account);
+  const saved = readPending(key);
+  if (!saved) return null;
+  const contract = await getContract(ethereum);
+  const hash = replacementHash.trim() || saved.hash;
+  if (!/^0x[0-9a-f]{64}$/i.test(hash)) throw new Error("Enter a valid transaction hash.");
+  const replacement = hash.toLowerCase() !== saved.hash.toLowerCase();
+  if (replacement) {
+    const transaction = await contract.runner.getTransaction(hash);
+    if (!transaction || !Number.isSafeInteger(saved.nonce) || transaction.nonce !== saved.nonce || transaction.from.toLowerCase() !== account.toLowerCase()) throw new Error("Replacement must be from the same wallet with the original nonce.");
+  }
+  const receipt = await contract.runner.getTransactionReceipt(hash);
+  if (!receipt) return { ...saved, status:"pending" };
+  if (receipt.from?.toLowerCase() !== account.toLowerCase() || !replacement && receipt.to?.toLowerCase() !== crowdfundingAddress.toLowerCase()) throw new Error("Receipt does not match this wallet and contract. Check MetaMask activity.");
+  const result = {...saved, hash, status:Number(receipt.status) === 1 ? "success" : "failed", campaignId:Number(receipt.status) === 1 && saved.method === "createCampaign" ? campaignIdFromReceipt(receipt) : null};
+  clearPending(key);
+  return result;
 }
 export async function getContribution(ethereum, id, account) { return (await getContract(ethereum)).contributions(id, account); }
 export async function getWalletContributions(ethereum, campaigns, account, signal) {
